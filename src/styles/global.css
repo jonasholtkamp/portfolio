@@ -12,17 +12,6 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-canvas: #0c0c0c;
-    --color-surface: #131313;
-    --color-ink: #e4e1dc;
-    --color-ink-muted: #5c5c5c;
-    --color-teal: #5aada0;
-    --color-edge: #1e1e1e;
-  }
-}
-
 @layer base {
   html {
     scroll-behavior: smooth;
