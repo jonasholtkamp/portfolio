@@ -1,0 +1,54 @@
+---
+const jobs = [
+  {
+    company: 'codejoi',
+    url: 'https://codejoi.com',
+    role: 'Software Engineer',
+    period: 'Present',
+    description:
+      'Software development consultancy. Individual contributor with a focus on cloud infrastructure, platform engineering, and application development.',
+  },
+  {
+    company: 'Senacor',
+    url: 'https://senacor.com',
+    role: 'Lead Developer',
+    period: '9 years',
+    description:
+      'IT consulting and digital transformation, primarily for banking and enterprise clients. Led a feature team as Lead Developer within an agile delivery setup — hands-on with architecture, code, and people in equal measure.',
+  },
+  {
+    company: 'Finanz Informatik',
+    url: 'https://f-i.de',
+    role: 'Software Engineer',
+    period: '3+ years',
+    description: 'IT service provider for the German savings bank financial group.',
+  },
+];
+---
+
+<section id="experience" class="py-24 px-6 scroll-mt-14">
+  <div class="max-w-4xl mx-auto">
+    <p class="font-mono text-xs text-teal mb-12 tracking-widest uppercase">Experience</p>
+    <div class="space-y-12">
+      {jobs.map((job) => (
+        <div class="grid sm:grid-cols-[160px_1fr] gap-1 sm:gap-8">
+          <p class="font-mono text-sm text-ink-muted sm:pt-0.5">{job.period}</p>
+          <div>
+            <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2">
+              <a
+                href={job.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-medium text-ink hover:text-teal transition-colors duration-150"
+              >
+                {job.company}
+              </a>
+              <span class="text-sm text-ink-muted">— {job.role}</span>
+            </div>
+            <p class="text-sm text-ink-muted leading-relaxed">{job.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

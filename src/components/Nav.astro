@@ -1,0 +1,23 @@
+---
+const links = [
+  { href: '#about', label: 'About' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<header class="fixed top-0 inset-x-0 z-50 bg-canvas border-b border-edge">
+  <nav class="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
+    <a href="#" class="font-mono text-sm text-teal">Jonas Holtkamp</a>
+    <ul class="hidden sm:flex items-center gap-8">
+      {links.map(({ href, label }) => (
+        <li>
+          <a href={href} class="text-sm text-ink-muted hover:text-ink transition-colors duration-150">
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>

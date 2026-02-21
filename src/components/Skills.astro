@@ -1,0 +1,52 @@
+---
+const groups = [
+  {
+    label: 'Languages & Runtimes',
+    items: ['Java', 'Kotlin', 'Node.js', 'TypeScript'],
+  },
+  {
+    label: 'Cloud & Infrastructure',
+    items: ['AWS', 'GCP', 'Kubernetes', 'Terraform', 'Docker'],
+  },
+  {
+    label: 'Data',
+    items: ['MongoDB', 'Redis', 'DynamoDB', 'Cloud Spanner'],
+  },
+  {
+    label: 'Messaging & Streaming',
+    items: ['Apache Kafka', 'RabbitMQ', 'AWS SNS', 'Google Pub/Sub'],
+  },
+  {
+    label: 'Observability',
+    items: ['Prometheus', 'Grafana', 'ELK Stack', 'Datadog'],
+  },
+  {
+    label: 'CI/CD',
+    items: ['GitHub Actions', 'GitLab CI'],
+  },
+  {
+    label: 'Practices',
+    items: ['GitOps', 'DevOps', 'Microservices', 'Distributed Systems', 'REST APIs', 'Agile'],
+  },
+];
+---
+
+<section id="skills" class="py-24 px-6 scroll-mt-14">
+  <div class="max-w-4xl mx-auto">
+    <p class="font-mono text-xs text-teal mb-12 tracking-widest uppercase">Skills</p>
+    <div class="space-y-8">
+      {groups.map(({ label, items }) => (
+        <div class="grid sm:grid-cols-[160px_1fr] gap-2 sm:gap-8 items-start">
+          <p class="font-mono text-xs text-ink-muted uppercase tracking-wider sm:pt-1.5">{label}</p>
+          <div class="flex flex-wrap gap-2">
+            {items.map((item) => (
+              <span class="text-sm text-ink-muted px-3 py-1 border border-edge rounded">
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
