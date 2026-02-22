@@ -1,0 +1,64 @@
+---
+const projects = [
+  {
+    title: 'Private Banking Application',
+    sector: 'Financial Services',
+    period: '2018 — 2020',
+    bullets: [
+      'Co-designed an event-sourced CQRS microservice architecture for a private banking platform.',
+      'Built and operated microservices on a Kubernetes-based (OpenShift) infrastructure.',
+      'Developed greenfield data models and services in Kotlin, backed by Redis and MongoDB.',
+    ],
+  },
+  {
+    title: 'Multi-Channel Banking Platform',
+    sector: 'Financial Services',
+    period: '2020 — 2022',
+    bullets: [
+      'Designed and implemented the architecture for a multi-channel online banking platform on Google Cloud.',
+      'Built a distributed microservice layer covering product and partner domains, with a focus on scalability and resilience.',
+      'Implemented a data integration layer handling both event-driven and batch processing workloads.',
+      'Contributed to internal shared libraries, standardising logging, authentication, and database access across teams.',
+    ],
+  },
+  {
+    title: 'Automotive After-Sales Platform',
+    sector: 'Automotive',
+    period: '2022 — 2025',
+    bullets: [
+      'Led the design and implementation of a cloud-native after-sales web application built on a microservice architecture.',
+      'Established a scalable, event-driven infrastructure on AWS using Kubernetes, Kafka, and NoSQL.',
+      'Managed infrastructure as code with Terraform, ensuring full service integration.',
+      'Provided technical leadership, mentoring engineers and driving agile development practices across the team.',
+    ],
+  },
+];
+---
+
+<section id="projects" class="py-24 px-6 scroll-mt-14">
+  <div class="max-w-4xl mx-auto">
+    <p class="font-mono text-xs text-teal mb-2 tracking-widest uppercase">Selected Projects</p>
+    <p class="text-sm text-ink-muted mb-12">From my time at Senacor.</p>
+    <div class="space-y-14">
+      {projects.map((project) => (
+        <div class="grid sm:grid-cols-[160px_1fr] gap-1 sm:gap-8">
+          <div class="sm:pt-0.5">
+            <p class="font-mono text-sm text-ink-muted">{project.period}</p>
+            <p class="font-mono text-xs text-teal mt-1">{project.sector}</p>
+          </div>
+          <div>
+            <p class="font-medium text-ink mb-3">{project.title}</p>
+            <ul class="space-y-2">
+              {project.bullets.map((bullet) => (
+                <li class="text-sm text-ink-muted leading-relaxed flex gap-3">
+                  <span class="text-teal mt-0.5 shrink-0">—</span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
