@@ -12,10 +12,10 @@ parse='const d=JSON.parse(require("fs").readFileSync("/dev/stdin","utf8"));const
 
 run() {
   local label="$1" scheme="$2" preset="${3:---preset=desktop}"
-  LABEL="$label" CHROME_PATH="$CHROME_PATH" npx lighthouse "$URL" \
+  CHROME_PATH="$CHROME_PATH" npx lighthouse "$URL" \
     --output=json --quiet \
     --chrome-flags="--headless --force-prefers-color-scheme=$scheme" \
-    $preset 2>/dev/null | node -e "$parse"
+    $preset 2>/dev/null | LABEL="$label" node -e "$parse"
 }
 
 echo "Target: $URL"
