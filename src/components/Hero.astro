@@ -6,7 +6,7 @@
     <div class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-12">
 
       <div class="flex-1">
-        <p class="font-mono text-sm text-teal mb-4">Jonas Holtkamp</p>
+        <p id="hero-name" class="font-mono text-sm text-teal mb-4">Jonas Holtkamp</p>
         <h1 class="text-5xl sm:text-6xl font-light text-ink leading-tight mb-6">
           Software Engineer
         </h1>
@@ -33,3 +33,14 @@
     </div>
   </div>
 </section>
+
+<script>
+  const heroName = document.getElementById('hero-name');
+  const navName = document.getElementById('nav-name');
+  if (heroName && navName) {
+    new IntersectionObserver(
+      ([entry]) => navName.classList.toggle('opacity-0', entry.isIntersecting),
+      { threshold: 0 }
+    ).observe(heroName);
+  }
+</script>
