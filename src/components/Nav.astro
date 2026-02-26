@@ -10,7 +10,7 @@ const links = [
 
 <header class="fixed top-0 inset-x-0 z-50 bg-canvas border-b border-edge px-6">
   <nav class="max-w-4xl mx-auto h-14 flex items-center justify-between">
-    <a href="#" class="font-mono text-sm text-teal">Jonas Holtkamp</a>
+    <a href="#" id="nav-name" class="font-mono text-sm text-teal opacity-0 transition-opacity duration-300">Jonas Holtkamp</a>
     <ul class="hidden sm:flex items-center gap-8">
       {links.map(({ href, label }) => (
         <li>
