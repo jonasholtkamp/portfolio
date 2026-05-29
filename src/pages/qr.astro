@@ -15,6 +15,7 @@ const initialPayload = [
   '',
   '',
   '',
+  '',
 ].join('\n');
 const initialQrParams = new URLSearchParams({
   size: '240x240',
@@ -27,7 +28,7 @@ const initialQrUrl = `https://api.qrserver.com/v1/create-qr-code/?${initialQrPar
 
 <Layout
   title="SEPA QR Transfer | Jonas Holtkamp"
-  description="Create a SEPA QR code with optional transfer amount and reference."
+  description="Create a SEPA QR code with optional transfer amount and Verwendungszweck."
 >
   <main class="min-h-screen bg-canvas px-4 py-6 text-ink sm:px-6 sm:py-8">
     <section class="mx-auto flex max-w-2xl flex-col items-center gap-5 rounded-3xl border border-edge bg-surface p-5 shadow-sm sm:p-6">
@@ -35,7 +36,7 @@ const initialQrUrl = `https://api.qrserver.com/v1/create-qr-code/?${initialQrPar
         <p class="font-mono text-xs uppercase tracking-[0.3em] text-teal">SEPA transfer</p>
         <h1 class="text-3xl font-semibold tracking-tight">Scan to pay</h1>
         <p class="text-sm leading-5 text-ink-muted">
-          Transfers go to <span class="font-mono text-ink">{iban}</span>. Add an amount or reference below and the QR code updates as you type.
+          Transfers go to <span class="font-mono text-ink">{iban}</span>. Add an amount or Verwendungszweck below and the QR code updates as you type.
         </p>
       </div>
 
@@ -66,7 +67,7 @@ const initialQrUrl = `https://api.qrserver.com/v1/create-qr-code/?${initialQrPar
         </label>
 
         <label class="grid gap-2 text-sm font-medium" for="reference">
-          Reference <span class="font-normal text-ink-muted">(optional)</span>
+          Verwendungszweck <span class="font-normal text-ink-muted">(optional)</span>
           <input
             id="reference"
             class="w-full rounded-2xl border border-edge bg-canvas px-4 py-2.5 text-base text-ink outline-none transition focus:border-teal focus:ring-2 focus:ring-teal/20"
@@ -96,7 +97,7 @@ const initialQrUrl = `https://api.qrserver.com/v1/create-qr-code/?${initialQrPar
 
 <script define:vars={{ iban, beneficiary }}>
   const amountInput = document.querySelector('#amount');
-  const referenceInput = document.querySelector('#reference');
+  const remittanceTextInput = document.querySelector('#reference');
   const qrImage = document.querySelector('#sepa-qr');
 
   const normalizeAmount = (value) => {
@@ -117,7 +118,7 @@ const initialQrUrl = `https://api.qrserver.com/v1/create-qr-code/?${initialQrPar
 
   const createSepaPayload = () => {
     const amount = normalizeAmount(amountInput.value);
-    const reference = referenceInput.value.trim();
+    const remittanceText = remittanceTextInput.value.trim();
 
     return [
       'BCD',
@@ -129,7 +130,8 @@ const initialQrUrl = `https://api.qrserver.com/v1/create-qr-code/?${initialQrPar
       iban.replaceAll(' ', ''),
       amount,
       '',
-      reference,
+      '',
+      remittanceText,
       '',
     ].join('\n');
   };
@@ -147,6 +149,6 @@ const initialQrUrl = `https://api.qrserver.com/v1/create-qr-code/?${initialQrPar
   };
 
   amountInput.addEventListener('input', updateQrCode);
-  referenceInput.addEventListener('input', updateQrCode);
+  remittanceTextInput.addEventListener('input', updateQrCode);
   updateQrCode();
 </script>
