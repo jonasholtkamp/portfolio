@@ -1,0 +1,154 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const iban = 'DE89 5001 0517 5421 8477 37';
+const beneficiary = 'Jonas Holtkamp';
+const initialPayload = [
+  'BCD',
+  '002',
+  '1',
+  'SCT',
+  '',
+  beneficiary,
+  iban.replaceAll(' ', ''),
+  '',
+  '',
+  '',
+  '',
+  '',
+].join('\n');
+const initialQrParams = new URLSearchParams({
+  size: '240x240',
+  margin: '8',
+  ecc: 'M',
+  data: initialPayload,
+});
+const initialQrUrl = `https://api.qrserver.com/v1/create-qr-code/?${initialQrParams.toString()}`;
+---
+
+<Layout
+  title="SEPA QR Transfer | Jonas Holtkamp"
+  description="Create a SEPA QR code with optional transfer amount and Verwendungszweck."
+>
+  <main class="min-h-screen bg-canvas px-4 py-6 text-ink sm:px-6 sm:py-8">
+    <section class="mx-auto flex max-w-2xl flex-col items-center gap-5 rounded-3xl border border-edge bg-surface p-5 shadow-sm sm:p-6">
+      <div class="space-y-2 text-center">
+        <p class="font-mono text-xs uppercase tracking-[0.3em] text-teal">SEPA transfer</p>
+        <h1 class="text-3xl font-semibold tracking-tight">Scan to pay</h1>
+        <p class="text-sm leading-5 text-ink-muted">
+          Transfers go to <span class="font-mono text-ink">{iban}</span>. Add an amount or Verwendungszweck below and the QR code updates as you type.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-edge bg-white p-3">
+        <img
+          id="sepa-qr"
+          class="h-60 w-60"
+          src={initialQrUrl}
+          width="240"
+          height="240"
+          alt="SEPA QR code for transfer to Jonas Holtkamp"
+        />
+      </div>
+
+      <form class="grid w-full gap-4 sm:grid-cols-2" aria-label="SEPA QR options">
+        <label class="grid gap-2 text-sm font-medium" for="amount">
+          Amount <span class="font-normal text-ink-muted">(optional)</span>
+          <div class="relative">
+            <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted">€</span>
+            <input
+              id="amount"
+              class="w-full rounded-2xl border border-edge bg-canvas py-2.5 pl-9 pr-4 text-base text-ink outline-none transition focus:border-teal focus:ring-2 focus:ring-teal/20"
+              inputmode="decimal"
+              autocomplete="off"
+              placeholder="0.00"
+            />
+          </div>
+        </label>
+
+        <label class="grid gap-2 text-sm font-medium" for="reference">
+          Verwendungszweck <span class="font-normal text-ink-muted">(optional)</span>
+          <input
+            id="reference"
+            class="w-full rounded-2xl border border-edge bg-canvas px-4 py-2.5 text-base text-ink outline-none transition focus:border-teal focus:ring-2 focus:ring-teal/20"
+            autocomplete="off"
+            maxlength="140"
+            placeholder="Invoice number, note, or message"
+          />
+        </label>
+      </form>
+
+      <details class="w-full rounded-2xl border border-edge bg-canvas p-3 text-sm text-ink-muted">
+        <summary class="cursor-pointer font-medium text-ink">QR payment details</summary>
+        <dl class="mt-4 grid gap-2">
+          <div class="flex justify-between gap-4">
+            <dt>Recipient</dt>
+            <dd class="text-right font-mono text-ink">{beneficiary}</dd>
+          </div>
+          <div class="flex justify-between gap-4">
+            <dt>IBAN</dt>
+            <dd class="text-right font-mono text-ink">{iban}</dd>
+          </div>
+        </dl>
+      </details>
+    </section>
+  </main>
+</Layout>
+
+<script define:vars={{ iban, beneficiary }}>
+  const amountInput = document.querySelector('#amount');
+  const remittanceTextInput = document.querySelector('#reference');
+  const qrImage = document.querySelector('#sepa-qr');
+
+  const normalizeAmount = (value) => {
+    const cleaned = value.trim().replace(',', '.');
+
+    if (!cleaned) {
+      return '';
+    }
+
+    const amount = Number(cleaned);
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+      return '';
+    }
+
+    return `EUR${amount.toFixed(2)}`;
+  };
+
+  const createSepaPayload = () => {
+    const amount = normalizeAmount(amountInput.value);
+    const remittanceText = remittanceTextInput.value.trim();
+
+    return [
+      'BCD',
+      '002',
+      '1',
+      'SCT',
+      '',
+      beneficiary,
+      iban.replaceAll(' ', ''),
+      amount,
+      '',
+      '',
+      remittanceText,
+      '',
+    ].join('\n');
+  };
+
+  const updateQrCode = () => {
+    const payload = createSepaPayload();
+    const params = new URLSearchParams({
+      size: '240x240',
+      margin: '8',
+      ecc: 'M',
+      data: payload,
+    });
+
+    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?${params.toString()}`;
+  };
+
+  amountInput.addEventListener('input', updateQrCode);
+  remittanceTextInput.addEventListener('input', updateQrCode);
+  updateQrCode();
+</script>
